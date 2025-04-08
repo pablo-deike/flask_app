@@ -1,5 +1,4 @@
-from init_db import db
-import bcrypt
+from init_db import db, bcrypt
 
 
 class User(db.Model):
@@ -9,6 +8,5 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
 
-    def verify_password(self, password):
-        pwhash = bcrypt.hashpw(password, self.password)
-        return self.password == pwhash
+    def verify_password(self, password: str) -> bool:
+        return bcrypt.check_password_hash(self.password, password)

@@ -1,1 +1,29 @@
-<h>Welcome to the login page</h>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+
+<body>
+    <form id="userForm">
+        <h2>Login Account</h2>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+        <div class="error" id="usernameError"></div>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+        <div class="error" id="passwordError"></div>
+
+        <button type="submit">Login</button>
+    </form>
+    <a href="{{ url_for('register_get') }}">Don't have an account? Sign Up</a>
+    <script src="../static/login.js"></script>
+</body>
+
+</html>
