@@ -40,5 +40,6 @@ container.register(
         user_builder=c.resolve("user_builder"),
     ),
 )
-auth_controller = container.resolve("auth_controller")
-register_controller = container.resolve("register_controller")
+user_repository: DbUserRepository = container.resolve("user_repository")
+auth_controller: AuthController = container.resolve("auth_controller")
+register_controller: RegisterController = container.resolve("register_controller")

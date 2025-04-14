@@ -1,12 +1,19 @@
-from flask import Flask, render_template, request
-from init_db import db, migrate, bcrypt
-from container import auth_controller, register_controller
+import os
+from dotenv import load_dotenv
+from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask_login import login_required, logout_user
+from init_db import db, migrate, bcrypt, login_manager
+from container import auth_controller, register_controller, user_repository
 
+load_dotenv()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 db.init_app(app=app)
 migrate.init_app(app=app, db=db)
 bcrypt.init_app(app)
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 
 @app.route("/", methods=["GET"])
@@ -35,8 +42,21 @@ def verification():
 
 
 @app.route("/dashboard", methods=["GET"])
+@login_required
 def dashboard():
     return render_template("dashboard.html")
+
+
+@login_manager.user_loader
+def load_user(userid):
+    return user_repository.get_by_id(int(userid))
+
+
+@app.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":

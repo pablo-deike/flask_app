@@ -1,4 +1,5 @@
 from flask import Request, Response, jsonify, url_for
+from flask_login import login_user
 from src.infrastructure.db_user_repository import DbUserRepository
 
 
@@ -15,6 +16,7 @@ class AuthController:
         if user is None:
             return jsonify({"error": "Invalid username"}), 401
         if user.verify_password(password) is True:
+            login_user(user)
             return (
                 jsonify({"redirect_url": url_for("dashboard")}),
                 200,
