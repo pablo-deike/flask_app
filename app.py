@@ -12,7 +12,7 @@ from container import (
 
 load_dotenv()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DEV_DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 db.init_app(app=app)
 migrate.init_app(app=app, db=db)
