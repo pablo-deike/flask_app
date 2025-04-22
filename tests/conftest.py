@@ -15,9 +15,7 @@ from init_db import db, migrate, bcrypt, login_manager
 def app():
     load_dotenv()
     app = Flask(__name__, template_folder="../templates")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-        "TEST_DATABASE_URL", "sqlite:///test.db"
-    )
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
     app.config["TESTING"] = True
     app.config["SECRET_KEY"] = "test_secret_key"
 
