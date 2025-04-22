@@ -1,7 +1,12 @@
+from unittest import TestCase
 from flask_sqlalchemy import SQLAlchemy
+from init_db import db
 
 
-class TestUserRepository:
+class TestUserRepository(TestCase):
 
-    def __init__(self, db: SQLAlchemy):
+    def setUp(self):
         self.db = db
+
+    def save_returns_ok(self):
+        pass
