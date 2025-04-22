@@ -9,7 +9,18 @@
 
 <body>
     <p>This is the dashboard</p>
-    <a href="{{url_for('logout')}}">Logout</a>
+    <script src="../static/dashboard.js"></script>
+    <div id="row">
+        Email : <strong class="gfg"> {{ session['email'] }} </strong>| <button onclick="editEmail()">Edit Email</button>
+    </div>
+    <form id="userForm" hidden>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" value="{{session['email']}}" required />
+        <div id="emailError"></div>
+
+        <button type="submit" onclick="changeEmail()">Change email</button>
+    </form>
+    <a href="{{ url_for('logout') }}"> Logout</a>
 </body>
 
 </html>

@@ -1,5 +1,7 @@
 from typing import Optional
+from flask import session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import update
 
 from src.domain.user import User
 from src.domain.user_repository import UserRepository
@@ -23,4 +25,10 @@ class DbUserRepository(UserRepository):
 
     def save(self, user: User) -> None:
         self.db.session.add(user)
+        self.db.session.commit()
+
+    def update(self, email: str) -> None:
+        self.db.session.execute(
+            update(User), [{"id": session["userid"], "email": email}]
+        )
         self.db.session.commit()

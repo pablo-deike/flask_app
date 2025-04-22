@@ -13,3 +13,7 @@ class UserRepository(ABC):
     @abstractmethod
     def save(self, user: User) -> None:
         pass
+
+    @abstractmethod
+    def update(self, email: str) -> None:
+        pass

@@ -46,7 +46,6 @@ document.getElementById('userForm')
           }
 
           const result = await response.json();
-          console.log('User created successfully!');
           window.location.href = result.redirect_url;
         } catch (err) {
           alert('Failed to submit: ' + err.message);

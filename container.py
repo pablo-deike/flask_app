@@ -1,5 +1,6 @@
 from typing import Any
 
+from src.infrastructure.change_user_attr_controller import ChangeUserAttrController
 from src.domain.user_builder import UserBuilder
 from src.infrastructure.register_controller import RegisterController
 from src.infrastructure.db_user_repository import DbUserRepository
@@ -40,6 +41,13 @@ container.register(
         user_builder=c.resolve("user_builder"),
     ),
 )
+container.register(
+    "change_user_attr_controller",
+    lambda c: ChangeUserAttrController(user_repository=c.resolve("user_repository")),
+)
 user_repository: DbUserRepository = container.resolve("user_repository")
 auth_controller: AuthController = container.resolve("auth_controller")
 register_controller: RegisterController = container.resolve("register_controller")
+change_user_attr_controller: ChangeUserAttrController = container.resolve(
+    "change_user_attr_controller"
+)

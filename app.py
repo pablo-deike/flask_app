@@ -1,9 +1,14 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from flask_login import login_required, logout_user
 from init_db import db, migrate, bcrypt, login_manager
-from container import auth_controller, register_controller, user_repository
+from container import (
+    auth_controller,
+    register_controller,
+    user_repository,
+    change_user_attr_controller,
+)
 
 load_dotenv()
 app = Flask(__name__)
@@ -52,10 +57,17 @@ def load_user(userid):
     return user_repository.get_by_id(int(userid))
 
 
+@app.route("/change_user_attr", methods=["POST"])
+@login_required
+def change_user_attr():
+    return change_user_attr_controller.post(request)
+
+
 @app.route("/logout", methods=["GET"])
 @login_required
 def logout():
     logout_user()
+    session.pop("email", None)
     return redirect(url_for("home"))
 
 
